@@ -13,6 +13,7 @@ JIRA_DOMAIN = os.getenv("JIRA_DOMAIN")  # e.g., "slalom.atlassian.net"
 JIRA_PROJECT_KEY = os.getenv("JIRA_PROJECT_KEY")  # e.g., "PROJ"
 JIRA_API_TOKEN = os.getenv("JIRA_API_TOKEN")
 JIRA_USER_EMAIL = os.getenv("JIRA_USER_EMAIL")
+JIRA_COOKIE = os.getenv("JIRA_COOKIE")
 
 # Step 1: Analyze the PNG with OpenAI Vision API
 def analyze_figma_png(image_path):
@@ -84,7 +85,8 @@ def create_jira_ticket(story):
     headers = {
         "Accept": "application/json",
         "Content-Type": "application/json",
-        "Authorization": f"Basic {base64.b64encode(f'{JIRA_USER_EMAIL}:{JIRA_API_TOKEN}'.encode()).decode()}"
+        "Cookie": JIRA_COOKIE
+        # "Authorization": f"Basic {base64.b64encode(f'{JIRA_USER_EMAIL}:{JIRA_API_TOKEN}'.encode()).decode()}"
     }
     
     payload = {
@@ -111,7 +113,7 @@ def create_jira_ticket(story):
                 ]
             },
             "issuetype": {"name": "Story"},
-            "priority": {"name": story["priority"]}
+            # "priority": {"name": story["priority"]}
         }
     }
     
